@@ -26,11 +26,10 @@ jobs:
           sed -i "s/^## Version: .*/## Version: ${{ github.ref_name }}/g" Attune-Epoch.toc 
           sed -i "s/local attunelocal_version = \".*\"/local attunelocal_version = \"${{ github.ref_name }}\"/g" Attune.lua
           
-          # Check if there are changes to commit (prevents error if version is already correct)
-          if git diff --quiet Attune-Epoch.toc; then
-            echo "No changes to TOC file"
+          if git diff --quiet Attune-Epoch.toc Attune.lua; then
+            echo "No version changes detected in TOC or LUA"
           else
-            git add Attune-Epoch.toc
+            git add Attune-Epoch.toc Attune.lua
             git commit -m "chore: update version to ${{ github.ref_name }} [skip ci]"
             git push origin HEAD:master
           fi
