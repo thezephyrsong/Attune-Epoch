@@ -304,7 +304,7 @@ local attune_options = {
 				websiteUrl = {
 					type = "input",
 					name = "Database Website URL",
-					desc = "URL of a World of Warcraft database website",
+					desc = "URL of a World of Warcraft Epoch database website",
 					get = function(info) return Attune_DB.websiteUrl end,
 					set = function(info, val) Attune_DB.websiteUrl = val end,
 					width = "full",
@@ -3287,7 +3287,7 @@ function Attune_CreateNode(step, parent, posX, posY)
 			GameTooltip:SetHyperlink("item:"..step.ID_WOWHEAD)
 
 			fnode:SetScript("OnMouseUp", function(self, button)
-				if button == "RightButton" then Attune_ShowWebsiteURL("item=" .. step.ID_WOWHEAD)	end
+				if button == "RightButton" then Attune_ShowWebsiteURL("?item=" .. step.ID_WOWHEAD)	end
 			end)
 
 		elseif step.TYPE == "End" then
@@ -3350,7 +3350,7 @@ function Attune_CreateNode(step, parent, posX, posY)
 				if Lang["Q2_"..step.ID_WOWHEAD] ~= nil then GameTooltip:AddLine(Lang["Q2_"..step.ID_WOWHEAD], 1, 1, 1, 1, true) end
 
 				fnode:SetScript("OnMouseUp", function(self, button)
-					if button == "RightButton" then Attune_ShowWebsiteURL("quest=" .. step.ID_WOWHEAD)	end
+					if button == "RightButton" then Attune_ShowWebsiteURL("quest/" .. step.ID_WOWHEAD)	end
 				end)
 			end
 
@@ -3371,7 +3371,7 @@ function Attune_CreateNode(step, parent, posX, posY)
 				end
 
 				fnode:SetScript("OnMouseUp", function(self, button)
-					if button == "RightButton" then Attune_ShowWebsiteURL("npc=" .. step.ID_WOWHEAD)	end
+					if button == "RightButton" then Attune_ShowWebsiteURL("mob/" .. step.ID_WOWHEAD)	end
 				end)
 			end
 
