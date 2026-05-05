@@ -33,7 +33,7 @@ jobs:
           else
             git add Attune-Epoch.toc
             git commit -m "chore: update version to ${{ github.ref_name }} [skip ci]"
-            git push origin HEAD:main
+            git push origin HEAD:master
           fi
 
       - name: Build zip
