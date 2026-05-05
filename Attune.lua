@@ -689,56 +689,77 @@ end
 
 ----
 function Attune:UpdateAttuneProgress(playerNameFull)
-	local t = Attune_DB.toons[playerNameFull]
+    local t = Attune_DB.toons[playerNameFull]
 
-	if t ~= nil then
-		-- calculate how many steps this toon has done on the attune
-		local attuneSteps = {}
-		local attuneHasOR = {}
-		for i, s in pairs(Attune_Data.steps) do
-			if showPatchStep(s) then
-				if s.TYPE ~= "Spacer" then
-					if attuneSteps[s.ID_ATTUNE] == nil then attuneSteps[s.ID_ATTUNE] = 0 end
-					attuneSteps[s.ID_ATTUNE] = attuneSteps[s.ID_ATTUNE] +1
+    if t ~= nil then
+        -- calculate how many steps this toon has done on the attune
+        local attuneSteps = {}
+        local attuneHasOR = {}
+        for i, s in pairs(Attune_Data.steps) do
+            if showPatchStep(s) then
+                if s.TYPE ~= "Spacer" then
+                    if attuneSteps[s.ID_ATTUNE] == nil then attuneSteps[s.ID_ATTUNE] = 0 end
+                    attuneSteps[s.ID_ATTUNE] = attuneSteps[s.ID_ATTUNE] + 1
 
-					if attuneHasOR[s.ID_ATTUNE] ~= true then
-						if string.find(s.FOLLOWS, "|") ~= nil then
-							attuneHasOR[s.ID_ATTUNE] = true
-						end
-					end
-				end
-			end
-		end
-		
+                    if attuneHasOR[s.ID_ATTUNE] ~= true then
+                        if string.find(s.FOLLOWS, "|") ~= nil then
+                            attuneHasOR[s.ID_ATTUNE] = true
+                        end
+                    end
+                end
+            end
+        end
 
-		local attuneDone = {}
-		local ignoreMissingParts = {}
-		if t.done ~= nil then 
-			for i, d in pairs(t.done) do
-				local Ids = Attune_split(i, "-")
-				if attuneDone[Ids[1]] == nil then attuneDone[Ids[1]] = 0 end
-				attuneDone[Ids[1]] = attuneDone[Ids[1]] +1
+        local attuneDone = {}
+        local ignoreMissingParts = {}
+        if t.done ~= nil then 
+            for i, d in pairs(t.done) do
+                local Ids = Attune_split(i, "-")
+                if attuneDone[Ids[1]] == nil then attuneDone[Ids[1]] = 0 end
+                attuneDone[Ids[1]] = attuneDone[Ids[1]] + 1
 
-				if attuneHasOR[Ids[1]] then
+                if attuneHasOR[Ids[1]] then
 					for si, sd in pairs(Attune_Data.steps) do
 						if sd.ID_ATTUNE	== Ids[1] and sd.ID == Ids[2] and sd.TYPE == "End" then -- they've completed an End step on an attune that has OR. We can cheat
 							 ignoreMissingParts[sd.ID_ATTUNE] = true
 						end
 					end
 				end
-			end
+            end
 
-			if t.attuned == nil then t.attuned = {} end
-			for i, a in pairs(Attune_Data.attunes) do
-				if attuneDone[a.ID] == nil then attuneDone[a.ID] = 0 end
-				t.attuned[a.ID] = math.floor(100*(attuneDone[a.ID]/attuneSteps[a.ID]))
+            if t.attuned == nil then t.attuned = {} end
+            for i, a in pairs(Attune_Data.attunes) do
+                if attuneDone[a.ID] == nil then attuneDone[a.ID] = 0 end
+                
+                -- 1. BASE CALCULATION
+                if attuneSteps[a.ID] and attuneSteps[a.ID] > 0 then
+                    t.attuned[a.ID] = math.floor(100 * (attuneDone[a.ID] / attuneSteps[a.ID]))
+                else
+                    t.attuned[a.ID] = 0
+                end
 
-				if ignoreMissingParts[a.ID] == true then
-					t.attuned[a.ID] = 100
-				end
-			end
-		end
-	end
+                -- 2. ACHIEVEMENT OVERRIDE (Since you added ID 4995)
+                if a.ACHIEVEMENT_ID then
+                    local _, _, _, completed = GetAchievementInfo(a.ACHIEVEMENT_ID)
+                    if completed then
+                        t.attuned[a.ID] = 100
+                    end
+                end
+
+                -- 3. LEGACY OVERRIDE
+                if ignoreMissingParts[a.ID] == true then
+                    t.attuned[a.ID] = 100
+                end
+
+                -- 4. MANUAL MC FIX (Now properly outside other blocks)
+                if a.ID == "2" then
+                    if t.done["2-220"] or (t.next and t.next["2-220"]) then
+                        t.attuned["2"] = 100
+                    end
+                end
+            end
+        end
+    end
 end
 
 -- util stuff
@@ -3253,6 +3274,10 @@ function Attune_CreateNode(step, parent, posX, posY)
 	if Attune_DB.toons[attunelocal_charKey].done == nil then Attune_DB.toons[attunelocal_charKey].done = {}  end
 	local done = Attune_DB.toons[attunelocal_charKey].done[step.ID_ATTUNE .. "-" .. step.ID]
 
+	if step.TYPE == "End" and Attune_DB.toons[attunelocal_charKey].attuned[step.ID_ATTUNE] == 100 then
+	    done = 1
+	end
+
 	local countNeeded = 1
 	if step.COUNT ~= nil then countNeeded = step.COUNT end
 
@@ -4588,6 +4613,7 @@ function Attune_ShowResultList(title)
 
 
 	for kt, t in pairs(Attune_DB.toons) do
+
 		-- calculate how many steps this toon has done on the attune
 		Attune:UpdateAttuneProgress(kt)
 	end

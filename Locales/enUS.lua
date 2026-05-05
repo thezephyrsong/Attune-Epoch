@@ -516,6 +516,29 @@ Lang["I_44569"] = "Key to the Focusing Iris"
 Lang["I_44582"] = "Key to the Focusing Iris"
 Lang["I_44577"] = "Heroic Key to the Focusing Iris"
 Lang["I_44581"] = "Heroic Key to the Focusing Iris"
+--Epoch
+Lang["I_4625"] = "Firebloom"
+Lang["I_3819"] = "Wintersbite"
+Lang["I_7068"] = "Elemental Fire"
+Lang["I_7070"] = "Elemental Water"
+Lang["I_61959"] = "Torid's Fiery Core"
+Lang["I_61960"] = "Keenice's Frozen Core"
+Lang["I_61961"] = "Filled Insulated Vial"
+
+
+-- QUESTS - Epoch
+Lang["Q1_26303"] = "Attunement to the Core"			
+Lang["Q2_26303"] = "Seek out Duke Hydraxis on an island off the coast of Azshara."
+Lang["Q1_26304"] = "Attunement to the Core"			
+Lang["Q2_26304"] = "Bring 5 Firebloom, 5 Wintersbite, an Elemental Fire, and an Elemental Water to Duke Hydraxis on an island off the coast of Azshara."
+Lang["Q1_26305"] = "Attunement to the Core"			
+Lang["Q2_26305"] = "Bring Torid's Fiery Core and Keenice's Frozen Core to Duke Hydraxis on an island off the coast of Azshara."
+Lang["Q1_26306"] = "Attunement to the Core"			
+Lang["Q2_26306"] = "Fill the Insulated Vial with the lava that flows near the entrance to the Molten Core in Blackrock Depths, and collect a Core Fragment from the wall nearby."
+Lang["Q1_26307"] = "Attunement to the Core"			
+Lang["Q2_26307"] = "Hold still while Duke Hydraxis imbues you with a charm of protection that allows you to safely enter the Molten Core."
+
+
 
 
 -- QUESTS - Classic
