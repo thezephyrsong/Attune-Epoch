@@ -1,11 +1,11 @@
 ## Interface: 30300
 ## Title: Attune
-## Author: CixiDelmont, Yvely (2.4.3 port)
+## Author: Zae, CixiDelmont, Yvely (2.4.3 port)
 ## Notes: Track your Attunement progression
 ## SavedVariables: Attune_DB
 ## SavedVariablesPerCharacter: AttuneLastViewed, TreeExpandStatus, AttuneCompletedQuests
 ## Version: 255243001
-## X-Website: https://warcraftratings.com
+## X-Website: https://epochhead.com
 embeds.xml
 Locales\Locales.xml
 Attune.lua
