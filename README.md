@@ -4,8 +4,8 @@ WHAT THE ADDON IS FOR:
 
 
 INSTALLATION:
-  - Copy the "Attune" folder into your Wow Classic \Interface\AddOns\ folder
-  - Restart World of Warcraft Classic
+  - Copy the "Attune-Epoch" folder into your Epoch \Interface\AddOns\ folder
+  - Restart Epoch
  
   
 HOW TO ACTIVATE:
