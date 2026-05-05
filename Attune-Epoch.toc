@@ -1,5 +1,5 @@
 ## Interface: 30300
-## Title: Attune
+## Title: Attune-Epoch
 ## Author: Zae, CixiDelmont, Yvely (2.4.3 port)
 ## Notes: Track your Attunement progression
 ## SavedVariables: Attune_DB
