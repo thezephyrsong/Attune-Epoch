@@ -25,7 +25,7 @@
 	{ID="12",NAME=Lang["Blackrock Depths"], ATTLOC="", TYPE="", EXPAC=Lang["World of Warcraft"], GROUP=Lang['KEYS'], FACTION="Both",ICON="Interface\\Icons\\inv_misc_key_08", DESC=Lang["OnlyOne_Desc"]},
 	{ID="14",NAME=Lang["Scholomance"], ATTLOC="" --[[ NO ATTUNEMENT, JUST KEY]], TYPE="", EXPAC=Lang["World of Warcraft"], GROUP=Lang['KEYS'], FACTION="Horde",ICON="Interface\\Icons\\inv_misc_key_11", DESC=Lang["OnlyOne_Desc"]},
 	{ID="15",NAME=Lang["Scholomance"], ATTLOC="", TYPE="", EXPAC=Lang["World of Warcraft"], GROUP=Lang['KEYS'], FACTION="Alliance",ICON="Interface\\Icons\\inv_misc_key_11", DESC=Lang["OnlyOne_Desc"]},
-
+	}
 
 
 	Attune_Data.steps = 
