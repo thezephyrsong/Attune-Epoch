@@ -24,7 +24,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           sed -i "s/^## Version: .*/## Version: ${{ github.ref_name }}/g" Attune-Epoch.toc 
-    	  sed -i "s/local attunelocal_version = \".*\"/local attunelocal_version = \"${{ github.ref_name }}\"/g" Attune.lua
+          sed -i "s/local attunelocal_version = \".*\"/local attunelocal_version = \"${{ github.ref_name }}\"/g" Attune.lua
           
           # Check if there are changes to commit (prevents error if version is already correct)
           if git diff --quiet Attune-Epoch.toc; then
