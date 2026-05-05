@@ -6,11 +6,11 @@ end
 
 
 -- INTERFACE
-Lang["Credits"] = "Ported to 2.4.3 by Yvely. All props to Cixi though.\nOriginal credits:\nA huge thank you to my guild |cffffd100<Divine Heresy>|r for their support and understanding while I test the addon, and heaps of kudos to |cffffd100Bushido @ Pyrewood Village|r for the help on TBC!\n\n Also, many, many thanks to the translators:\n  - German translation: |cffffd100Sumaya @ Razorfen DE|r\n  - Russian translation: |cffffd100Greymarch Guild @ Flamegor RU|r\n  - Spanish translation: |cffffd100Coyu @ Pyrewood Village EU|r\n  - Chinese translation (simp.): |cffffd100ly395842562|r and |cffffd100Icyblade|r\n  - Chinese translation (trad.): |cffffd100DayZ|r @ Ivus TW|r\n  - Korean translation: |cffffd100Drix @ Azshara KR|r\n\n/Hug from Cixi/Gaya @ Remulos Horde"
+Lang["Credits"] = "Ported to 3.3.5 by Cixi@Remulos and 2.4.3 by Yvely. All props to Cixi though.\nOriginal credits:\nA huge thank you to my guild |cffffd100<Divine Heresy>|r for their support and understanding while I test the addon, and heaps of kudos to |cffffd100Bushido @ Pyrewood Village|r for the help on TBC!\n\n Also, many, many thanks to the translators:\n  - German translation: |cffffd100Sumaya @ Razorfen DE|r\n  - Russian translation: |cffffd100Greymarch Guild @ Flamegor RU|r\n  - Spanish translation: |cffffd100Coyu @ Pyrewood Village EU|r\n  - Chinese translation (simp.): |cffffd100ly395842562|r and |cffffd100Icyblade|r\n  - Chinese translation (trad.): |cffffd100DayZ|r @ Ivus TW|r\n  - Korean translation: |cffffd100Drix @ Azshara KR|r\n\n/Hug from Cixi/Gaya @ Remulos Horde"
 Lang["Mini"] = "Mini"
 Lang["Maxi"] = "Maxi"
-Lang["Version"] = "Attune v##VERSION## by Cixi@Remulos, 2.4.3 port by Yvely@Everywhere"
-Lang["Splash"] = "v##VERSION## by Cixi@Remulos, 2.4.3 port by Yvely@Everywhere. Type /attune to start."
+Lang["Version"] = "Attune ##VERSION## by Zae"
+Lang["Splash"] = "##VERSION## by Zae. Type /attune to start."
 Lang["Survey"] = "Survey"
 Lang["Guild"] = "Guild"
 Lang["Party"] = "Party"

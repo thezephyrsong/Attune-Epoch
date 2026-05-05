@@ -17,15 +17,14 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
-      - name: Update Version in TOC and Push
+      - name: Update Version in TOC and Attune and Push
         run: |
           # Configure Git
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Replace the version line in the .toc file
-          # This looks for any line starting with ## Version: and replaces it
-          sed -i "s/^## Version: .*/## Version: ${{ github.ref_name }}/g" Attune-Epoch.toc
+          sed -i "s/^## Version: .*/## Version: ${{ github.ref_name }}/g" Attune-Epoch.toc 
+    	  sed -i "s/local attunelocal_version = \".*\"/local attunelocal_version = \"${{ github.ref_name }}\"/g" Attune.lua
           
           # Check if there are changes to commit (prevents error if version is already correct)
           if git diff --quiet Attune-Epoch.toc; then
