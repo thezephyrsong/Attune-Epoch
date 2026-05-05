@@ -1,0 +1,5 @@
+package-as: Attune-Epoch
+
+ignore:
+  - .github
+  - .pkgmeta
