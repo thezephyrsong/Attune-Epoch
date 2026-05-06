@@ -1,10 +1,8 @@
 name: Release
-
 on:
   push:
     tags:
       - '[0-9]*'
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -17,49 +15,64 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
-      - name: Update Version in TOC and Attune and Push
+      - name: Update version in TOC and Attune.lua
         run: |
-          # Configure Git
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          sed -i "s/^## Version: .*/## Version: ${{ github.ref_name }}/g" Attune-Epoch.toc 
-          sed -i "s/local attunelocal_version = \".*\"/local attunelocal_version = \"${{ github.ref_name }}\"/g" Attune.lua
-          
+          TAG="${{ github.ref_name }}"
+          sed -i "s/^## Version: .*/## Version: $TAG/" Attune-Epoch.toc
+          sed -i "s/local attunelocal_version = \"[^\"]*\"/local attunelocal_version = \"$TAG\"/" Attune.lua
           if git diff --quiet Attune-Epoch.toc Attune.lua; then
-            echo "No version changes detected in TOC or LUA"
+            echo "No version changes needed"
           else
             git add Attune-Epoch.toc Attune.lua
-            git commit -m "chore: update version to ${{ github.ref_name }} [skip ci]"
-            git push origin HEAD:master
+            git commit -m "chore: update version to $TAG [skip ci]"
+            git push origin HEAD:refs/heads/master
           fi
+
+      - name: Verify versions match tag
+        run: |
+          TAG="${{ github.ref_name }}"
+          TOC_VER=$(grep '^## Version:' Attune-Epoch.toc | sed 's/^## Version: //')
+          LUA_VER=$(grep 'local attunelocal_version = ' Attune.lua | sed 's/local attunelocal_version = "\([^"]*\)".*/\1/')
+          echo "Tag: $TAG | TOC: $TOC_VER | Lua: $LUA_VER"
+          [ "$TOC_VER" = "$TAG" ] || (echo "TOC version mismatch" && exit 1)
+          [ "$LUA_VER" = "$TAG" ] || (echo "Lua version mismatch" && exit 1)
 
       - name: Build zip
         run: |
           mkdir -p Attune-Epoch
-          rsync -av --exclude='.git' --exclude='.github' --exclude='.gitignore' \
-            --exclude='.gitattributes' --exclude='.pkgmeta' \
-            --exclude='Attune-Epoch' . Attune-Epoch/
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.gitignore' \
+            --exclude='.gitattributes' \
+            --exclude='.pkgmeta' \
+            --exclude='*.md' \
+            --exclude='Attune-Epoch/' \
+            . Attune-Epoch/
           zip -r Attune-Epoch.zip Attune-Epoch/
 
-      - name: Create Versioned GitHub Release
+      - name: Create versioned release
         uses: softprops/action-gh-release@v2
         with:
           files: Attune-Epoch.zip
+          name: "v${{ github.ref_name }}"
+          generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update Latest Tag
+      - name: Update latest tag
         run: |
           git tag -f latest
           git push origin latest --force
 
-      - name: Update Latest GitHub Release
+      - name: Update latest release
         uses: softprops/action-gh-release@v2
         with:
           files: Attune-Epoch.zip
           tag_name: latest
           name: Latest Release
-          body: "This release always contains the most recent version (${{ github.ref_name }})."
+          body: "Always points to the most recent version. Current: ${{ github.ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
