@@ -36,7 +36,7 @@ local attunelocal_minimapicon = LibStub("LibDBIcon-1.0")
 local attunelocal_brokervalue = nil
 local attunelocal_brokerlabel = nil
 
-local attunelocal_version = "0.0.4"  			-- change here, and in TOC x2
+local attunelocal_version = "255243001"  			-- change here, and in TOC x2
 local attunelocal_prefix = "Attune_Channel"			-- used for addon chat communications
 local attunelocal_versionprefix = "Attune_Version"	-- used for addon version check
 local attunelocal_syncprefix = "Attune_Sync"		-- used for addon version check
@@ -950,7 +950,7 @@ function Attune:OnEnableEnd()
 	if Attune_DB.raidPlans[attunelocal_faction] == nil then Attune_DB.raidPlans[attunelocal_faction] = {} end
 	if Attune_DB.raidNames[attunelocal_faction] == nil then Attune_DB.raidNames[attunelocal_faction] = {} end
 	if Attune_DB.raidSelection == nil then Attune_DB.raidSelection = {} end
-	if Attune_DB.raidSelection[attunelocal_faction] == nil then Attune_DB.raidSelection[attunelocal_faction] = 115 end
+	if Attune_DB.raidSelection[attunelocal_faction] == nil then Attune_DB.raidSelection[attunelocal_faction] = 2 end
 	--[[	local gameLocale = GetLocale()
 		if gameLocale == "enGB" then
 			gameLocale = "enUS"
@@ -6382,7 +6382,7 @@ function Attune_LoadRaidTree()
 		--only look at current faction and realm
 		if t.faction == UnitFactionGroup("player") and (kt == t.name.."-"..attunelocal_realm) then
 			--check they are attuned
-			if Attune_DB.raidShowUnattuned or t.attuned[""..Attune_DB.raidSelection[attunelocal_faction]] >= 100 then
+			if Attune_DB.raidShowUnattuned or (t.attuned[""..Attune_DB.raidSelection[attunelocal_faction]] or 0) >= 100 then
 				
 				if ((Attune_DB.raidShowMains and t.status == "Main") 
 				or (Attune_DB.raidShowAlts and t.status == "Alt")
