@@ -1431,6 +1431,10 @@ function Attune:PLAYER_GUILD_UPDATE(event, tar)
 	local gname, rank, gindex = GetGuildInfo("player")
 	if gname == nil then gname = "" end
 	attunelocal_myguild = gname
+	-- Also update the local player's own toon entry so they appear correctly in results
+	if Attune_DB.toons[attunelocal_charKey] then
+		Attune_DB.toons[attunelocal_charKey].guild = gname
+	end
 end
 
 -------------------------------------------------------------------------
@@ -4744,18 +4748,24 @@ function Attune_ShowResultList(title)
 									local gflabel = AceGUI:Create("Label")
 									if t.attuned[a.ID] >= 100 then
 										if inactive then 
-											gflabel:SetText("|TInterface\\AddOns\\Attune\\Images\\successinactive:16|t")
+											gflabel:SetText("|c80606060Complete|r |TInterface\\AddOns\\Attune\\Images\\successinactive:16|t")
 										else 
-											gflabel:SetText("|TInterface\\AddOns\\Attune\\Images\\success:16|t")
+											gflabel:SetText("|cff00ff00Complete|r |TInterface\\AddOns\\Attune\\Images\\success:16|t")
+										end
+									elseif t.attuned[a.ID] == 0 then
+										if inactive then
+											gflabel:SetText("|c80606060-|r")
+										else
+											gflabel:SetText("-")
 										end
 									else
 										if inactive then 
 											gflabel:SetText("|c80606060"..t.attuned[a.ID].."%|r")
 										else 
-											gflabel:SetText(t.attuned[a.ID].."%")
+											gflabel:SetText("|cffffff00"..t.attuned[a.ID].."%|r")
 										end
 									end
-									gflabel:SetWidth(30)
+									gflabel:SetWidth(75)
 
 									-- Yvely: Try to make it a little prettier than normal
 									gflabel:SetJustifyH("CENTER")
